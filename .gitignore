@@ -1,0 +1,25 @@
+﻿# Ambiente virtual
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Arquivos locais
+.env
+.env.*
+!.env.example
+*.log
+.vscode/
+.idea/
+
+# MLflow
+mlflow.db
+mlruns/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini

@@ -1,0 +1,176 @@
+{
+    "generated_at": "2026-11-17T23:15:53.574923+00:00",
+    "project": "credit-scoring",
+    "execution": {
+        "status": "success",
+        "duration_seconds": 0.2716,
+        "duration_scope": "metrics_collection_only"
+    },
+    "volume": {
+        "production_records": 30000,
+        "concept_drift_records": 30000,
+        "reference_records": 149377
+    },
+    "data_quality": {
+        "clean_reference_records": 149377,
+        "invalid_files": [
+            {
+                "file": "credit_duplicates.csv",
+                "records": 609
+            },
+            {
+                "file": "credit_invalid.csv",
+                "records": 14
+            },
+            {
+                "file": "credit_invalid_age.csv",
+                "records": 14
+            }
+        ],
+        "rejected_records": 623
+    },
+    "baseline": {
+        "available": true,
+        "model": "RandomForestClassifier",
+        "accuracy": 0.8242,
+        "precision": 0.2387,
+        "recall": 0.7413,
+        "f1_score": 0.3611,
+        "roc_auc": 0.866,
+        "test_records": 29876
+    },
+    "data_drift": {
+        "available": true,
+        "drift_detected": true,
+        "drifted_columns": 2,
+        "total_columns": 10,
+        "drift_share": 0.2,
+        "threshold": 0.2,
+        "column_metrics": [
+            {
+                "metric": "ValueDrift(column=RevolvingUtilizationOfUnsecuredLines,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.014316388178345003
+            },
+            {
+                "metric": "ValueDrift(column=age,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.0051396819354132765
+            },
+            {
+                "metric": "ValueDrift(column=NumberOfTime30-59DaysPastDueNotWorse,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.001187117647590811
+            },
+            {
+                "metric": "ValueDrift(column=DebtRatio,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.07656857949813489
+            },
+            {
+                "metric": "ValueDrift(column=MonthlyIncome,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.08394922349560488
+            },
+            {
+                "metric": "ValueDrift(column=NumberOfOpenCreditLinesAndLoans,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.011829550276715263
+            },
+            {
+                "metric": "ValueDrift(column=NumberOfTimes90DaysLate,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.0007486813268882893
+            },
+            {
+                "metric": "ValueDrift(column=NumberRealEstateLoansOrLines,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.01761798119116938
+            },
+            {
+                "metric": "ValueDrift(column=NumberOfTime60-89DaysPastDueNotWorse,method=Jensen-Shannon distance,threshold=0.1)",
+                "value": 0.00697626046165679
+            },
+            {
+                "metric": "ValueDrift(column=NumberOfDependents,threshold=0.05,method=Wasserstein distance (normed))",
+                "value": 0.007116377865528221
+            }
+        ]
+    },
+    "concept_drift": {
+        "available": true,
+        "model_retrained": false,
+        "records_evaluated": 30000,
+        "recall_delta": -0.412733,
+        "roc_auc_delta": -0.302313,
+        "original_metrics": {
+            "accuracy": 0.8306,
+            "precision": 0.2515132207709462,
+            "recall": 0.8047910295616718,
+            "f1_score": 0.383252427184466,
+            "roc_auc": 0.901783295918696,
+            "confusion_matrix": [
+                [
+                    23339,
+                    4699
+                ],
+                [
+                    383,
+                    1579
+                ]
+            ]
+        },
+        "simulated_metrics": {
+            "accuracy": 0.7521333333333333,
+            "precision": 0.33497929276839755,
+            "recall": 0.3920581655480984,
+            "f1_score": 0.3612781309053427,
+            "roc_auc": 0.5994702480343481,
+            "confusion_matrix": [
+                [
+                    20461,
+                    4175
+                ],
+                [
+                    3261,
+                    2103
+                ]
+            ]
+        },
+        "false_negatives_before": 383,
+        "false_negatives_after": 3261
+    },
+    "artifacts": {
+        "reference_data": {
+            "available": true,
+            "path": "data\\reference\\credit_reference_clean.csv"
+        },
+        "production_data": {
+            "available": true,
+            "path": "data\\production\\credit_production.csv"
+        },
+        "concept_drift_data": {
+            "available": true,
+            "path": "data\\production\\credit_concept_drift.csv"
+        },
+        "baseline_metrics": {
+            "available": true,
+            "path": "reports\\observability\\baseline_metrics.json"
+        },
+        "data_drift_metrics": {
+            "available": true,
+            "path": "reports\\data_drift\\data_drift_metrics.json"
+        },
+        "concept_drift_evaluation": {
+            "available": true,
+            "path": "reports\\observability\\concept_drift_evaluation.json"
+        },
+        "concept_drift_report": {
+            "available": true,
+            "path": "reports\\observability\\concept_drift_report.html"
+        }
+    },
+    "alerts": [
+        {
+            "severity": "WARNING",
+            "message": "Data Drift detectado em 2 de 10 variaveis."
+        },
+        {
+            "severity": "CRITICAL",
+            "message": "Queda significativa de Recall no experimento de Concept Drift."
+        }
+    ],
+    "alert_count": 2
+}

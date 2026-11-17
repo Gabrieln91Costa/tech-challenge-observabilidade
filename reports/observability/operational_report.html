@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Observabilidade Operacional - Credit Scoring</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background: #f3f5f8;
+    color: #243044;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+}
+
+header {
+    background: #172b4d;
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+section {
+    background: white;
+    padding: 24px;
+    margin-top: 22px;
+    border-radius: 10px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.card {
+    background: #f1f4f8;
+    padding: 20px;
+    border-radius: 9px;
+}
+
+.card span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.card strong {
+    display: block;
+    font-size: 25px;
+    margin-top: 10px;
+}
+
+h2 {
+    color: #172b4d;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e9ef;
+    text-align: left;
+}
+
+th {
+    background: #f1f4f8;
+}
+
+.critical {
+    color: #b42318;
+    font-weight: bold;
+}
+
+.warning {
+    color: #a15c00;
+    font-weight: bold;
+}
+
+.success {
+    color: #16834a;
+}
+
+.note {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    color: #64748b;
+    padding: 25px;
+}
+
+@media(max-width: 700px) {
+    body { padding: 12px; }
+    .cards { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+    <h1>Observabilidade Operacional</h1>
+    <p>Credit Scoring - Fintech</p>
+    <p>Monitoramento de dados, modelo e alertas</p>
+    <p>Gerado em: 2026-11-17T23:15:53.574923+00:00</p>
+</header>
+
+<section>
+    <h2>Indicadores principais</h2>
+
+    <div class="cards">
+        <div class="card">
+            <span>Registros de produção</span>
+            <strong>30,000</strong>
+        </div>
+
+        <div class="card">
+            <span>Variáveis com Data Drift</span>
+            <strong>2/10</strong>
+        </div>
+
+        <div class="card">
+            <span>Share de Data Drift</span>
+            <strong>20%</strong>
+        </div>
+
+        <div class="card">
+            <span>Recall baseline</span>
+            <strong>74.13%</strong>
+        </div>
+
+        <div class="card">
+            <span>ROC-AUC baseline</span>
+            <strong>86.60%</strong>
+        </div>
+
+        <div class="card">
+            <span>Recall após Concept Drift</span>
+            <strong>39.21%</strong>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>Alertas operacionais</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Severidade</th>
+                <th>Descrição</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td class="warning">WARNING</td>
+                <td>Data Drift detectado em 2 de 10 variaveis.</td>
+            </tr>
+            
+            <tr>
+                <td class="critical">CRITICAL</td>
+                <td>Queda significativa de Recall no experimento de Concept Drift.</td>
+            </tr>
+            
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>Qualidade dos dados</h2>
+
+    <p>Registros limpos na referência:
+       <strong>149377</strong>
+    </p>
+
+    <p>Registros rejeitados em arquivos de dados inválidos:
+       <strong>623</strong>
+    </p>
+</section>
+
+<section>
+    <h2>Execução e latência</h2>
+
+    <p>Tempo de coleta e geração deste relatório:
+       <strong>0.2716 segundos</strong>
+    </p>
+
+    <p class="note">
+       Esse tempo representa somente a execução do coletor de métricas,
+       não a latência histórica de todo o pipeline de treinamento e
+       monitoramento.
+    </p>
+</section>
+
+<section>
+    <h2>Arquivos e evidências</h2>
+
+    <table>
+        <tr><th>Artefato</th><th>Disponível</th></tr>
+        <tr><td>reference_data</td><td>Sim</td></tr><tr><td>production_data</td><td>Sim</td></tr><tr><td>concept_drift_data</td><td>Sim</td></tr><tr><td>baseline_metrics</td><td>Sim</td></tr><tr><td>data_drift_metrics</td><td>Sim</td></tr><tr><td>concept_drift_evaluation</td><td>Sim</td></tr><tr><td>concept_drift_report</td><td>Sim</td></tr>
+    </table>
+</section>
+
+<footer>
+    FIAP - Tech Challenge | Credit Scoring | Observabilidade
+</footer>
+
+</div>
+</body>
+</html>

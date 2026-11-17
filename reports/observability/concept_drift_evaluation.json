@@ -1,0 +1,46 @@
+{
+    "experiment": "concept_drift",
+    "model_retrained": false,
+    "records_evaluated": 30000,
+    "original_metrics": {
+        "accuracy": 0.8306,
+        "precision": 0.2515132207709462,
+        "recall": 0.8047910295616718,
+        "f1_score": 0.383252427184466,
+        "roc_auc": 0.901783295918696,
+        "confusion_matrix": [
+            [
+                23339,
+                4699
+            ],
+            [
+                383,
+                1579
+            ]
+        ]
+    },
+    "simulated_metrics": {
+        "accuracy": 0.7521333333333333,
+        "precision": 0.33497929276839755,
+        "recall": 0.3920581655480984,
+        "f1_score": 0.3612781309053427,
+        "roc_auc": 0.5994702480343481,
+        "confusion_matrix": [
+            [
+                20461,
+                4175
+            ],
+            [
+                3261,
+                2103
+            ]
+        ]
+    },
+    "metric_deltas": {
+        "accuracy": -0.078467,
+        "precision": 0.083466,
+        "recall": -0.412733,
+        "f1_score": -0.021974,
+        "roc_auc": -0.302313
+    }
+}

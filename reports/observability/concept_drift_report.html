@@ -1,0 +1,412 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Relatório de Concept Drift - Credit Scoring</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    background: #f3f5f8;
+    color: #243044;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+}
+
+header {
+    background: #172b4d;
+    color: white;
+    padding: 35px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    margin: 0 0 12px;
+    font-size: 28px;
+}
+
+header p {
+    color: #dce5f2;
+    margin: 5px 0;
+}
+
+section {
+    background: white;
+    padding: 25px;
+    margin-bottom: 22px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    margin-top: 0;
+    color: #172b4d;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.card {
+    padding: 20px;
+    background: #f4f6fa;
+    border-radius: 9px;
+}
+
+.card span {
+    color: #64748b;
+    font-size: 13px;
+}
+
+.card strong {
+    display: block;
+    font-size: 27px;
+    margin-top: 10px;
+}
+
+.danger {
+    color: #c0392b;
+}
+
+.success {
+    color: #16834a;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    padding: 13px;
+    border-bottom: 1px solid #e5e9ef;
+    text-align: center;
+}
+
+th {
+    background: #f0f3f8;
+}
+
+td:first-child {
+    text-align: left;
+    font-weight: bold;
+}
+
+.negative {
+    color: #c0392b;
+    font-weight: bold;
+}
+
+.positive {
+    color: #16834a;
+    font-weight: bold;
+}
+
+.neutral {
+    color: #64748b;
+}
+
+.matrices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+.matrix td {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.matrix th {
+    font-size: 12px;
+}
+
+.good {
+    background: #e4f4e9;
+    color: #16713b;
+}
+
+.bad {
+    background: #fde8e7;
+    color: #b42318;
+}
+
+.highlight {
+    border-left: 5px solid #c0392b;
+    background: #fff5f4;
+    padding: 18px;
+    line-height: 1.6;
+}
+
+.note {
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+    font-size: 12px;
+}
+
+@media(max-width: 750px) {
+    body {
+        padding: 12px;
+    }
+
+    .cards, .matrices {
+        grid-template-columns: 1fr;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th, td {
+        padding: 8px 4px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+    <h1>Monitoramento de Concept Drift</h1>
+    <p>Projeto: Credit Scoring - Fintech</p>
+    <p>Experimento de mudança na relação entre características e inadimplência</p>
+    <p>Modelo avaliado: Random Forest congelado, sem retreinamento</p>
+</header>
+
+<section>
+    <h2>1. Resumo executivo</h2>
+
+    <div class="cards">
+        <div class="card">
+            <span>Registros avaliados</span>
+            <strong>30,000</strong>
+        </div>
+
+        <div class="card">
+            <span>Queda no Recall</span>
+            <strong class="danger">-41.27 p.p.</strong>
+        </div>
+
+        <div class="card">
+            <span>Queda no ROC-AUC</span>
+            <strong class="danger">-30.23 p.p.</strong>
+        </div>
+    </div>
+
+    <div class="highlight" style="margin-top:20px">
+        <strong>Resultado:</strong>
+        a alteração simulada nos rótulos provocou uma redução
+        expressiva na capacidade do modelo de identificar clientes
+        inadimplentes.
+    </div>
+</section>
+
+<section>
+    <h2>2. Comparação das métricas</h2>
+
+    <p class="note">
+        Comparação do mesmo modelo e das mesmas previsões,
+        avaliados contra os rótulos originais e os rótulos
+        modificados na simulação.
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Métrica</th>
+                <th>Antes</th>
+                <th>Após</th>
+                <th>Variação</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td>Accuracy</td>
+            <td>83.06%</td>
+            <td>75.21%</td>
+            <td class="negative">-7.85 p.p.</td>
+        </tr>
+        
+        <tr>
+            <td>Precision</td>
+            <td>25.15%</td>
+            <td>33.50%</td>
+            <td class="positive">+8.35 p.p.</td>
+        </tr>
+        
+        <tr>
+            <td>Recall</td>
+            <td>80.48%</td>
+            <td>39.21%</td>
+            <td class="negative">-41.27 p.p.</td>
+        </tr>
+        
+        <tr>
+            <td>F1-Score</td>
+            <td>38.33%</td>
+            <td>36.13%</td>
+            <td class="neutral">-2.20 p.p.</td>
+        </tr>
+        
+        <tr>
+            <td>ROC-AUC</td>
+            <td>90.18%</td>
+            <td>59.95%</td>
+            <td class="negative">-30.23 p.p.</td>
+        </tr>
+        
+        </tbody>
+    </table>
+</section>
+
+<section>
+    <h2>3. Matrizes de confusão</h2>
+
+    <div class="matrices">
+        <div>
+            <h3>Rótulos originais</h3>
+            
+    <table class="matrix">
+        <tr>
+            <th></th>
+            <th>Previsto: 0</th>
+            <th>Previsto: 1</th>
+        </tr>
+        <tr>
+            <th>Real: 0</th>
+            <td class="good">23,339</td>
+            <td>4,699</td>
+        </tr>
+        <tr>
+            <th>Real: 1</th>
+            <td class="bad">383</td>
+            <td class="good">1,579</td>
+        </tr>
+    </table>
+    
+        </div>
+
+        <div>
+            <h3>Rótulos simulados</h3>
+            
+    <table class="matrix">
+        <tr>
+            <th></th>
+            <th>Previsto: 0</th>
+            <th>Previsto: 1</th>
+        </tr>
+        <tr>
+            <th>Real: 0</th>
+            <td class="good">20,461</td>
+            <td>4,175</td>
+        </tr>
+        <tr>
+            <th>Real: 1</th>
+            <td class="bad">3,261</td>
+            <td class="good">2,103</td>
+        </tr>
+    </table>
+    
+        </div>
+    </div>
+
+    <p class="note">
+        Verde: classificações corretas.
+        Vermelho: falsos negativos, ou seja, inadimplentes
+        classificados como não inadimplentes.
+    </p>
+</section>
+
+<section>
+    <h2>4. Impacto no risco de crédito</h2>
+
+    <div class="highlight">
+        Os falsos negativos aumentaram de
+        <strong>383</strong> para
+        <strong>3,261</strong> registros.
+
+        Isso representa um aumento de
+        <strong>2,878</strong> casos não identificados
+        pelo modelo na simulação.
+    </div>
+
+    <p>
+        Em um cenário de concessão de crédito, essa perda de
+        sensibilidade pode elevar o risco de aprovar operações
+        para clientes que apresentam inadimplência.
+    </p>
+</section>
+
+<section>
+    <h2>5. Metodologia do experimento</h2>
+
+    <ul>
+        <li>Utilização de 30.000 registros da base de referência.</li>
+        <li>Seleção de um segmento com DebtRatio elevado e renda mensal baixa.</li>
+        <li>Alteração artificial de parte dos rótulos de inadimplência.</li>
+        <li>Preservação das características originais dos registros.</li>
+        <li>Manutenção do modelo treinado, sem retreinamento.</li>
+        <li>Comparação das métricas contra os dois conjuntos de rótulos.</li>
+    </ul>
+
+    <p class="note">
+        Este é um experimento sintético e controlado para demonstrar
+        mudança em P(Y|X). Não representa evidência de mudança real
+        no comportamento dos clientes ou no mercado de crédito.
+        A amostra também é utilizada para comparação experimental,
+        não constituindo uma validação independente do modelo.
+    </p>
+</section>
+
+<section>
+    <h2>6. Conclusão e ações recomendadas</h2>
+
+    <p>
+        O experimento demonstrou que a alteração da relação entre
+        características financeiras e inadimplência pode comprometer
+        o desempenho de um modelo de Credit Scoring.
+    </p>
+
+    <p>
+        Recomenda-se monitorar continuamente Recall, F1-score,
+        ROC-AUC e falsos negativos, investigar mudanças no
+        comportamento dos dados rotulados e avaliar a necessidade
+        de retreinamento após validação e análise de governança.
+    </p>
+</section>
+
+<footer>
+    Relatório gerado automaticamente pelo pipeline de observabilidade.
+    <br>
+    FIAP - Tech Challenge - Credit Scoring
+</footer>
+
+</div>
+</body>
+</html>

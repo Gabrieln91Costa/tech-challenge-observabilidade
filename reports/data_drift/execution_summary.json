@@ -1,0 +1,21 @@
+{
+    "monitoring": "Data Drift",
+    "reference_records": 30000,
+    "production_records": 30000,
+    "features_analyzed": [
+        "RevolvingUtilizationOfUnsecuredLines",
+        "age",
+        "NumberOfTime30-59DaysPastDueNotWorse",
+        "DebtRatio",
+        "MonthlyIncome",
+        "NumberOfOpenCreditLinesAndLoans",
+        "NumberOfTimes90DaysLate",
+        "NumberRealEstateLoansOrLines",
+        "NumberOfTime60-89DaysPastDueNotWorse",
+        "NumberOfDependents"
+    ],
+    "features_count": 10,
+    "drift_share_threshold": 0.2,
+    "reference_dataset": "C:\\Users\\gabri\\OneDrive\\Documentos\\FIAP_2026\\FIAP_MACHINE_LEARN\\fase-4-tech-challenge-observabilidade\\tech-challenge-observabilidade\\data\\reference\\credit_reference_clean.csv",
+    "production_dataset": "C:\\Users\\gabri\\OneDrive\\Documentos\\FIAP_2026\\FIAP_MACHINE_LEARN\\fase-4-tech-challenge-observabilidade\\tech-challenge-observabilidade\\data\\production\\credit_production.csv"
+}

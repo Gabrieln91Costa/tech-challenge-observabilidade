@@ -1,0 +1,13 @@
+{
+    "experiment": "concept_drift",
+    "records": 30000,
+    "risk_segment_records": 7255,
+    "changed_labels": 3402,
+    "label_change_rate": 0.5,
+    "original_default_rate": 0.0654,
+    "simulated_default_rate": 0.1788,
+    "debt_ratio_threshold": 0.86515116375,
+    "monthly_income_threshold": 5400.0,
+    "random_state": 42,
+    "feature_distribution_preserved": true
+}
