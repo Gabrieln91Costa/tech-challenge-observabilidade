@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Tech Challenge | Observabilidade de Credit Scoring</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+
+<style>
+:root{--bg:#07111f;--panel:#101e30;--text:#e7eef7;--muted:#9fb0c4;--line:#263b52;--cyan:#42d6c5;--blue:#69a9ff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#17314c 0%,transparent 38%),linear-gradient(145deg,#07111f,#0a1626 55%,#081321);color:var(--text);font:16px/1.72 Inter,Segoe UI,Arial,sans-serif}
+a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline;color:#8cf2e5}
+#content{width:96vw;max-width:1800px;margin:0 auto;padding:34px clamp(18px,2.4vw,48px) 90px}
+.hero{padding:54px 48px 42px;border:1px solid #29445f;border-radius:24px;background:linear-gradient(120deg,rgba(20,49,73,.96),rgba(15,30,49,.94));box-shadow:0 24px 70px #0005;position:relative;overflow:hidden;margin-bottom:28px}
+.eyebrow{color:var(--cyan);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;font-weight:800}
+h1{font-size:clamp(2.2rem,5vw,4.1rem);line-height:1.08;letter-spacing:-.04em;margin:14px 0 12px;color:#fff}
+.subtitle{font-size:1.2rem;color:#c7d7e8;margin:0 0 22px}.pills{display:flex;flex-wrap:wrap;gap:9px}.pill{border:1px solid #3a5a75;border-radius:999px;padding:6px 12px;color:#d6e7f5;font-size:.82rem;background:#ffffff08}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:22px 0 30px}.kpi{padding:20px 21px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(145deg,#142940,#0e1c2d);box-shadow:0 12px 30px #0002}.kpi small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}.kpi strong{display:block;font-size:2rem;line-height:1.3;color:#fff;margin-top:7px}.kpi em{font-style:normal;color:var(--cyan);font-size:.82rem}
+h2{font-size:1.75rem;line-height:1.25;margin:54px 0 18px;padding-bottom:12px;border-bottom:1px solid var(--line);color:#fff;letter-spacing:-.025em}h3{font-size:1.2rem;color:#d8e8f6;margin:30px 0 12px}p,li{color:#c5d2e1}strong{color:#f3f7fc}
+blockquote{margin:22px 0;padding:14px 20px;border-left:3px solid var(--cyan);background:#102438;border-radius:0 12px 12px 0;color:#dceaf7}
+table{width:100%;max-width:100%;border-collapse:separate;border-spacing:0;margin:20px 0 28px;border:1px solid var(--line);border-radius:13px;overflow:hidden;background:#0d1b2b;font-size:.93rem}th{background:#173149;color:#dffaf6;text-align:left;font-weight:700}th,td{padding:12px 15px;border-bottom:1px solid #21364b}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#ffffff04}
+pre{max-width:100%;background:#050d17!important;border:1px solid #263d53;border-radius:14px;padding:20px;overflow:auto;box-shadow:inset 0 1px 0 #ffffff08}code{font-family:Consolas,Monaco,monospace;color:#9fe8dc}pre code{color:#d6e5f2}hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+#TOC{background:#0e1d2e;border:1px solid var(--line);border-radius:17px;padding:20px 24px;margin:26px 0 34px}#TOC:before{content:"NAVEGAÇÃO DO PROJETO";display:block;color:var(--cyan);font-weight:800;font-size:.76rem;letter-spacing:.15em;margin-bottom:10px}#TOC ul{margin:6px 0;padding-left:22px}#TOC li{margin:4px 0;font-size:.92rem}
+.callout{padding:18px 20px;border:1px solid #2b5960;border-radius:14px;background:linear-gradient(110deg,#12343b,#102538);margin:22px 0}
+footer{margin-top:65px;padding-top:22px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+@media(max-width:800px){#content{width:100%;padding:18px 15px 55px}.kpis{grid-template-columns:repeat(2,1fr)}.hero{padding:34px 24px}.kpi strong{font-size:1.55rem}}@media(max-width:460px){.kpis{grid-template-columns:1fr 1fr}}
+</style>
+
+</head>
+<body>
+
+<div id="content">
+<header class="hero">
+<div class="eyebrow">Tech Challenge · FIAP · Fase 4</div>
+<h1>Observabilidade de<br>Modelos de Machine Learning</h1>
+<p class="subtitle">Credit Scoring para Fintech</p>
+<div class="pills"><span class="pill">Data Quality</span><span class="pill">Data Drift</span><span class="pill">Concept Drift</span><span class="pill">MLflow</span><span class="pill">MLOps</span><span class="pill">LGPD</span></div>
+</header>
+<section class="kpis">
+<div class="kpi"><small>Base de referência</small><strong>149.377</strong><em>registros válidos</em></div>
+<div class="kpi"><small>Dados rejeitados</small><strong>623</strong><em>registros rejeitados</em></div>
+<div class="kpi"><small>Data Drift</small><strong>2 / 10</strong><em>variáveis com drift</em></div>
+<div class="kpi"><small>Recall pós-simulação</small><strong>39,21%</strong><em>queda de 41,27 p.p.</em></div>
+</section>
+<div class="callout"><strong>Principal achado:</strong> no experimento controlado, os falsos negativos aumentaram de <strong>383 para 3.261</strong>. A avaliação evidencia o risco de manter um modelo congelado quando a relação entre atributos e inadimplência muda.</div>
+
+<header id="title-block-header">
+<h1 class="title">Tech Challenge | Observabilidade de Credit
+Scoring</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#visão-geral" id="toc-visão-geral">1. Visão
+geral**</a></li>
+<li><a href="#contexto-do-negócio" id="toc-contexto-do-negócio">2.
+Contexto do negócio**</a></li>
+<li><a href="#arquitetura-da-solução" id="toc-arquitetura-da-solução">3.
+Arquitetura da solução**</a>
+<ul>
+<li><a href="#principais-componentes"
+id="toc-principais-componentes">Principais componentes**</a></li>
+</ul></li>
+<li><a href="#tecnologias-utilizadas" id="toc-tecnologias-utilizadas">4.
+Tecnologias utilizadas**</a></li>
+<li><a href="#dataset" id="toc-dataset">5. Dataset**</a>
+<ul>
+<li><a href="#preparação-dos-dados"
+id="toc-preparação-dos-dados">Preparação dos dados**</a></li>
+</ul></li>
+<li><a href="#contrato-de-dados-e-qualidade"
+id="toc-contrato-de-dados-e-qualidade">6. Contrato de dados e
+qualidade**</a>
+<ul>
+<li><a href="#evidências-de-qualidade"
+id="toc-evidências-de-qualidade">Evidências de qualidade**</a></li>
+</ul></li>
+<li><a href="#treinamento-do-modelo" id="toc-treinamento-do-modelo">7.
+Treinamento do modelo**</a>
+<ul>
+<li><a href="#configuração"
+id="toc-configuração">Configuração**</a></li>
+<li><a href="#métricas-do-modelo-baseline"
+id="toc-métricas-do-modelo-baseline">Métricas do modelo
+baseline**</a></li>
+</ul></li>
+<li><a href="#registro-de-experimentos-com-mlflow"
+id="toc-registro-de-experimentos-com-mlflow">8. Registro de experimentos
+com MLflow**</a></li>
+<li><a href="#monitoramento-de-data-drift"
+id="toc-monitoramento-de-data-drift">9. Monitoramento de Data
+Drift**</a>
+<ul>
+<li><a href="#resultado-do-experimento"
+id="toc-resultado-do-experimento">Resultado do experimento**</a></li>
+</ul></li>
+<li><a href="#monitoramento-de-concept-drift"
+id="toc-monitoramento-de-concept-drift">10. Monitoramento de Concept
+Drift**</a>
+<ul>
+<li><a href="#comparação-de-desempenho"
+id="toc-comparação-de-desempenho">Comparação de desempenho**</a></li>
+<li><a href="#variação-das-métricas"
+id="toc-variação-das-métricas">Variação das métricas**</a></li>
+<li><a href="#impacto-nos-falsos-negativos"
+id="toc-impacto-nos-falsos-negativos">Impacto nos falsos
+negativos**</a></li>
+</ul></li>
+<li><a href="#observabilidade-operacional"
+id="toc-observabilidade-operacional">11. Observabilidade
+operacional**</a>
+<ul>
+<li><a href="#indicadores-monitorados"
+id="toc-indicadores-monitorados">Indicadores monitorados**</a></li>
+<li><a href="#regras-de-alerta" id="toc-regras-de-alerta">Regras de
+alerta**</a></li>
+<li><a href="#resultado-operacional-consolidado"
+id="toc-resultado-operacional-consolidado">Resultado operacional
+consolidado**</a></li>
+<li><a href="#artefatos-gerados" id="toc-artefatos-gerados">Artefatos
+gerados**</a></li>
+</ul></li>
+<li><a href="#estrutura-do-projeto" id="toc-estrutura-do-projeto">12.
+Estrutura do projeto**</a></li>
+<li><a href="#como-executar-o-projeto"
+id="toc-como-executar-o-projeto">13. Como executar o projeto**</a>
+<ul>
+<li><a href="#pré-requisitos" id="toc-pré-requisitos">13.1.
+Pré-requisitos**</a></li>
+<li><a href="#clonar-o-repositório" id="toc-clonar-o-repositório">13.2.
+Clonar o repositório**</a></li>
+<li><a href="#criar-e-ativar-o-ambiente-virtual"
+id="toc-criar-e-ativar-o-ambiente-virtual">13.3. Criar e ativar o
+ambiente virtual**</a></li>
+<li><a href="#instalar-dependências"
+id="toc-instalar-dependências">13.4. Instalar dependências**</a></li>
+<li><a href="#executar-o-pipeline" id="toc-executar-o-pipeline">13.5.
+Executar o pipeline**</a></li>
+<li><a href="#executar-os-testes" id="toc-executar-os-testes">13.6.
+Executar os testes**</a></li>
+<li><a href="#visualizar-os-relatórios"
+id="toc-visualizar-os-relatórios">13.7. Visualizar os
+relatórios**</a></li>
+</ul></li>
+<li><a href="#governança-de-dados-privacidade-e-lgpd"
+id="toc-governança-de-dados-privacidade-e-lgpd">14. Governança de Dados,
+Privacidade e LGPD**</a>
+<ul>
+<li><a href="#objetivo-da-governança"
+id="toc-objetivo-da-governança">14.1. Objetivo da governança**</a></li>
+<li><a href="#classificação-e-tratamento-dos-dados"
+id="toc-classificação-e-tratamento-dos-dados">14.2. Classificação e
+tratamento dos dados**</a></li>
+<li><a href="#finalidade-e-bases-legais"
+id="toc-finalidade-e-bases-legais">14.3. Finalidade e bases
+legais**</a></li>
+<li><a href="#privacidade-desde-a-concepção-privacy-by-design"
+id="toc-privacidade-desde-a-concepção-privacy-by-design">14.4.
+Privacidade desde a concepção (Privacy by Design)**</a></li>
+<li><a href="#segurança-e-controle-de-acesso"
+id="toc-segurança-e-controle-de-acesso">14.5. Segurança e controle de
+acesso**</a></li>
+<li><a href="#retenção-e-descarte-dos-dados"
+id="toc-retenção-e-descarte-dos-dados">14.6. Retenção e descarte dos
+dados**</a></li>
+<li><a href="#direitos-dos-titulares-e-decisões-automatizadas"
+id="toc-direitos-dos-titulares-e-decisões-automatizadas">14.7. Direitos
+dos titulares e decisões automatizadas**</a></li>
+<li><a href="#prevenção-de-vieses-e-discriminação"
+id="toc-prevenção-de-vieses-e-discriminação">14.8. Prevenção de vieses e
+discriminação**</a></li>
+<li><a href="#rastreabilidade-e-auditoria-do-modelo"
+id="toc-rastreabilidade-e-auditoria-do-modelo">14.9. Rastreabilidade e
+auditoria do modelo**</a></li>
+<li><a href="#avaliação-de-impacto-à-proteção-de-dados"
+id="toc-avaliação-de-impacto-à-proteção-de-dados">14.10. Avaliação de
+impacto à proteção de dados**</a></li>
+<li><a href="#referências-legais-e-institucionais"
+id="toc-referências-legais-e-institucionais">14.11. Referências legais e
+institucionais**</a></li>
+</ul></li>
+<li><a href="#limitações-e-considerações-técnicas"
+id="toc-limitações-e-considerações-técnicas">15. Limitações e
+considerações técnicas**</a></li>
+<li><a href="#conclusão" id="toc-conclusão">16. Conclusão**</a></li>
+</ul>
+</nav>
+<h2 id="visão-geral">1. Visão geral**</h2>
+<p>Este projeto apresenta uma arquitetura experimental de
+observabilidade aplicada a um modelo de Credit Scoring de uma
+fintech.</p>
+<p>O objetivo é demonstrar como o monitoramento contínuo pode
+identificar alterações na distribuição dos dados, degradação do
+desempenho preditivo e problemas de qualidade durante o ciclo de vida de
+um modelo de Machine Learning.</p>
+<p>A solução contempla:</p>
+<ul>
+<li><p>Ingestão e preparação dos dados.</p></li>
+<li><p>Validação de contratos de dados.</p></li>
+<li><p>Identificação e tratamento de registros inválidos.</p></li>
+<li><p>Treinamento de modelo de classificação.</p></li>
+<li><p>Registro de métricas com MLflow.</p></li>
+<li><p>Simulação de Data Drift.</p></li>
+<li><p>Simulação controlada de Concept Drift.</p></li>
+<li><p>Monitoramento estatístico com Evidently AI.</p></li>
+<li><p>Geração de relatórios e alertas operacionais.</p></li>
+<li><p>Consolidação de indicadores de observabilidade.</p></li>
+</ul>
+<h2 id="contexto-do-negócio">2. Contexto do negócio**</h2>
+<p>Instituições financeiras utilizam modelos de Credit Scoring para
+estimar o risco de inadimplência de clientes.</p>
+<p>Entretanto, as características dos clientes e as condições econômicas
+podem mudar ao longo do tempo. Um modelo treinado com dados históricos
+pode perder capacidade preditiva quando essas mudanças não são
+monitoradas.</p>
+<p>Nesse cenário, a ausência de observabilidade pode resultar em:</p>
+<ul>
+<li><p>Aumento de falsos negativos na identificação de clientes de
+risco.</p></li>
+<li><p>Redução da capacidade de identificar potenciais
+inadimplentes.</p></li>
+<li><p>Alterações inesperadas na distribuição dos dados.</p></li>
+<li><p>Decisões de crédito baseadas em previsões degradadas.</p></li>
+<li><p>Falta de rastreabilidade sobre a qualidade e o desempenho do
+modelo.</p></li>
+</ul>
+<p>A solução proposta permite acompanhar esses indicadores e gerar
+evidências para apoiar decisões de manutenção e evolução do modelo.</p>
+<h2 id="arquitetura-da-solução">3. Arquitetura da solução**</h2>
+<p>```text</p>
+<pre><code>                DATASET DE CRÉDITO
+
+                        |
+
+                        v
+
+               INGESTÃO DE DADOS
+
+                        |
+
+                        v
+
+              CONTRATO DE DADOS
+
+                   PANDERA
+
+                        |
+
+             +----------+----------+
+
+             |                     |
+
+             v                     v
+
+      DADOS VÁLIDOS          DADOS INVÁLIDOS
+
+             |                     |
+
+             v                     v
+
+      PREPARAÇÃO E              REJEIÇÃO E
+
+       TRATAMENTO             RASTREABILIDADE
+
+             |
+
+             v
+
+      DATASET DE REFERÊNCIA
+
+             |
+
+             v
+
+      TREINAMENTO DO MODELO
+
+          RANDOM FOREST
+
+             |
+
+             v
+
+         MODELO BASELINE
+
+             |
+
+             v
+
+      REGISTRO DE MÉTRICAS
+
+            MLFLOW
+
+             |
+
+             v
+
+      SIMULAÇÃO DE PRODUÇÃO
+
+             |
+
+      +------+------+
+
+      |             |
+
+      v             v
+
+  DATA DRIFT   CONCEPT DRIFT
+
+      |             |
+
+      v             v
+
+   EVIDENTLY    AVALIAÇÃO DO
+
+      AI          MODELO
+
+      |             |
+
+      +------+------+
+
+             |
+
+             v
+
+   OBSERVABILIDADE OPERACIONAL
+
+             |
+
+      +------+------+
+
+      |             |
+
+      v             v
+
+   MÉTRICAS       ALERTAS
+
+      |             |
+
+      +------+------+
+
+             |
+
+             v
+
+         JSON / HTML / LOGS</code></pre>
+<p>```</p>
+<h3 id="principais-componentes">Principais componentes**</h3>
+<p>| Componente | Responsabilidade |</p>
+<p>|—|—|</p>
+<p>| Pandas | Manipulação e preparação dos dados |</p>
+<p>| Pandera | Validação dos contratos de dados |</p>
+<p>| Scikit-learn | Treinamento e avaliação do modelo |</p>
+<p>| MLflow | Registro de parâmetros, métricas e modelo |</p>
+<p>| Evidently AI | Monitoramento estatístico de Data Drift |</p>
+<p>| Python Logging | Registro das execuções |</p>
+<p>| HTML e JSON | Relatórios e evidências de observabilidade |</p>
+<h2 id="tecnologias-utilizadas">4. Tecnologias utilizadas**</h2>
+<ul>
+<li><p>Python 3.11</p></li>
+<li><p>Pandas</p></li>
+<li><p>NumPy</p></li>
+<li><p>Scikit-learn</p></li>
+<li><p>Pandera</p></li>
+<li><p>Evidently AI</p></li>
+<li><p>MLflow</p></li>
+<li><p>Matplotlib</p></li>
+<li><p>Git e GitHub</p></li>
+</ul>
+<h2 id="dataset">5. Dataset**</h2>
+<p>Foi utilizado o dataset <strong>Give Me Some Credit</strong> *,
+contendo informações relacionadas ao comportamento financeiro e
+histórico de crédito de clientes.</p>
+<p>O conjunto original possui 150.000 registros.</p>
+<p>A variável alvo é:</p>
+<p>| Variável | Descrição |</p>
+<p>|—|—|</p>
+<p>| `SeriousDlqin2yrs` | Indica se ocorreu inadimplência grave nos
+próximos dois anos |</p>
+<p>Distribuição original da variável alvo:</p>
+<p>| Classe | Registros | Proporção |</p>
+<p>|—|—:|—:|</p>
+<p>| 0 — Sem inadimplência grave | 139.974 | 93,32% |</p>
+<p>| 1 — Com inadimplência grave | 10.026 | 6,68% |</p>
+<p>O dataset apresenta desbalanceamento entre as classes, característica
+importante para a avaliação do modelo.</p>
+<h3 id="preparação-dos-dados">Preparação dos dados**</h3>
+<p>Durante a preparação foram identificados:</p>
+<ul>
+<li><p>609 registros duplicados excedentes.</p></li>
+<li><p>14 registros com idade fora do intervalo permitido.</p></li>
+<li><p>Valores ausentes em `MonthlyIncome`.</p></li>
+<li><p>Valores ausentes em `NumberOfDependents`.</p></li>
+</ul>
+<p>Os valores ausentes foram tratados utilizando imputação pela
+mediana.</p>
+<p>Após o processo de preparação, o dataset de referência ficou com:</p>
+<p><strong>149.377 registros válidos.</strong> *</p>
+<p>Os registros rejeitados foram preservados em arquivos específicos
+para rastreabilidade.</p>
+<h2 id="contrato-de-dados-e-qualidade">6. Contrato de dados e
+qualidade**</h2>
+<p>Foi implementado um contrato de dados utilizando Pandera.</p>
+<p>O contrato estabelece regras de validação, incluindo:</p>
+<ul>
+<li><p>Tipo de dados esperado.</p></li>
+<li><p>Campos obrigatórios.</p></li>
+<li><p>Restrições de valores mínimos e máximos.</p></li>
+<li><p>Validação da variável alvo.</p></li>
+<li><p>Validação de idade entre 18 e 100 anos.</p></li>
+<li><p>Validação de valores não negativos em variáveis financeiras e
+quantitativas.</p></li>
+<li><p>Identificação de registros duplicados.</p></li>
+</ul>
+<p>A ingestão é interrompida quando os dados não atendem às regras
+estabelecidas.</p>
+<h3 id="evidências-de-qualidade">Evidências de qualidade**</h3>
+<p>| Indicador | Resultado |</p>
+<p>|—|—:|</p>
+<p>| Registros originais | 150.000 |</p>
+<p>| Registros válidos | 149.377 |</p>
+<p>| Duplicidades excedentes | 609 |</p>
+<p>| Idades inválidas | 14 |</p>
+<p>| Total de registros rejeitados | 623 |</p>
+<p>Os arquivos de rejeição são mantidos no diretório
+`data/invalid/`.</p>
+<h2 id="treinamento-do-modelo">7. Treinamento do modelo**</h2>
+<p>Foi desenvolvido um classificador utilizando Random Forest.</p>
+<h3 id="configuração">Configuração**</h3>
+<p>| Parâmetro | Valor |</p>
+<p>|—|—|</p>
+<p>| Algoritmo | RandomForestClassifier |</p>
+<p>| Número de estimadores | 150 |</p>
+<p>| Profundidade máxima | 12 |</p>
+<p>| Min samples split | 10 |</p>
+<p>| Min samples leaf | 5 |</p>
+<p>| Class weight | balanced |</p>
+<p>| Random state | 42 |</p>
+<p>| Test size | 20% |</p>
+<p>A divisão entre treinamento e teste utiliza estratificação para
+preservar a proporção das classes.</p>
+<h3 id="métricas-do-modelo-baseline">Métricas do modelo baseline**</h3>
+<p>| Métrica | Resultado |</p>
+<p>|—|—:|</p>
+<p>| Accuracy | 82,42% |</p>
+<p>| Precision | 23,87% |</p>
+<p>| Recall | 74,13% |</p>
+<p>| F1-score | 36,11% |</p>
+<p>| ROC-AUC | 86,60% |</p>
+<p>O modelo apresenta capacidade de discriminação, mas sua precisão para
+a classe positiva é limitada. Esse resultado deve ser considerado na
+avaliação de riscos e na definição de critérios de aprovação de
+crédito.</p>
+<p>O modelo treinado é salvo em `models/credit_model.pkl`.</p>
+<h2 id="registro-de-experimentos-com-mlflow">8. Registro de experimentos
+com MLflow**</h2>
+<p>O MLflow foi utilizado para registrar o experimento de
+treinamento.</p>
+<p>Foram registrados:</p>
+<ul>
+<li><p>Nome do experimento.</p></li>
+<li><p>Parâmetros do Random Forest.</p></li>
+<li><p>Métricas de avaliação.</p></li>
+<li><p>Artefato do modelo treinado.</p></li>
+</ul>
+<p><strong>Experimento:</strong> * `credit-scoring-observability`</p>
+<p><strong>Run:</strong> * `random-forest-baseline`</p>
+<p>Essa estrutura permite rastrear as configurações e os resultados do
+treinamento baseline.</p>
+<h2 id="monitoramento-de-data-drift">9. Monitoramento de Data
+Drift**</h2>
+<p>Data Drift ocorre quando a distribuição dos dados de entrada sofre
+alterações em relação à distribuição utilizada como referência.</p>
+<p>Para demonstrar esse comportamento, foi criada uma simulação de
+produção com 30.000 registros.</p>
+<p>Foram aplicadas alterações controladas:</p>
+<ul>
+<li><p>Redução de 25% em `MonthlyIncome`.</p></li>
+<li><p>Aumento de 35% em `DebtRatio`.</p></li>
+<li><p>Aumento de 25% em
+`RevolvingUtilizationOfUnsecuredLines`.</p></li>
+</ul>
+<p>O monitoramento foi realizado com Evidently AI, comparando os dados
+de referência com os dados simulados de produção.</p>
+<h3 id="resultado-do-experimento">Resultado do experimento**</h3>
+<p>| Variável | Wasserstein normalizado | Drift |</p>
+<p>|—|—:|—|</p>
+<p>| MonthlyIncome | 0,083949 | Detectado |</p>
+<p>| DebtRatio | 0,076569 | Detectado |</p>
+<p>| RevolvingUtilizationOfUnsecuredLines | 0,014316 | Não detectado
+|</p>
+<p>Resultado consolidado:</p>
+<ul>
+<li><p>Variáveis monitoradas: 10.</p></li>
+<li><p>Variáveis com drift: 2.</p></li>
+<li><p>Proporção com drift: 20%.</p></li>
+</ul>
+<p>Foi utilizada uma configuração experimental de `drift_share=0.20` e
+`num_threshold=0.05`.</p>
+<p>Esses parâmetros foram definidos para a demonstração e não devem ser
+interpretados como limites universais para ambientes produtivos.</p>
+<p><strong>Relatório gerado:</strong> *
+`reports/data_drift/data_drift_report.html`</p>
+<h2 id="monitoramento-de-concept-drift">10. Monitoramento de Concept
+Drift**</h2>
+<p>Concept Drift ocorre quando a relação entre as variáveis de entrada e
+a variável alvo se altera ao longo do tempo.</p>
+<p>Diferentemente do Data Drift, essa alteração pode ocorrer mesmo
+quando a distribuição das variáveis de entrada permanece semelhante.</p>
+<p>Para demonstrar esse cenário, foi realizado um experimento
+controlado:</p>
+<ol type="1">
+<li><p>Seleção de uma amostra de 30.000 registros.</p></li>
+<li><p>Identificação de um segmento de clientes com maior `DebtRatio` e
+menor `MonthlyIncome`.</p></li>
+<li><p>Alteração controlada de parte dos rótulos da classe negativa para
+a classe positiva.</p></li>
+<li><p>Preservação das distribuições das variáveis de entrada.</p></li>
+<li><p>Avaliação do modelo baseline sem realizar novo
+treinamento.</p></li>
+</ol>
+<p>A simulação alterou 3.402 rótulos de inadimplência dentro do segmento
+selecionado.</p>
+<p>A taxa de inadimplência da amostra passou de aproximadamente 6,54%
+para 17,88%.</p>
+<p><strong>Importante:</strong> * trata-se de uma simulação controlada
+para demonstrar a degradação do modelo. Não representa uma mudança real
+observada no mercado financeiro.</p>
+<h3 id="comparação-de-desempenho">Comparação de desempenho**</h3>
+<p>| Métrica | Cenário original | Cenário simulado |</p>
+<p>|—|—:|—:|</p>
+<p>| Accuracy | 83,06% | 75,21% |</p>
+<p>| Precision | 25,15% | 33,50% |</p>
+<p>| Recall | 80,48% | 39,21% |</p>
+<p>| F1-score | 38,33% | 36,13% |</p>
+<p>| ROC-AUC | 90,18% | 59,95% |</p>
+<h3 id="variação-das-métricas">Variação das métricas**</h3>
+<p>| Métrica | Variação |</p>
+<p>|—|—:|</p>
+<p>| Accuracy | -7,85 p.p. |</p>
+<p>| Precision | +8,35 p.p. |</p>
+<p>| Recall | -41,27 p.p. |</p>
+<p>| F1-score | -2,20 p.p. |</p>
+<p>| ROC-AUC | -30,23 p.p. |</p>
+<p>O principal alerta observado foi a queda do Recall, indicando uma
+redução expressiva da capacidade do modelo de identificar corretamente
+os casos positivos.</p>
+<h3 id="impacto-nos-falsos-negativos">Impacto nos falsos
+negativos**</h3>
+<p>| Indicador | Cenário original | Cenário simulado |</p>
+<p>|—|—:|—:|</p>
+<p>| Falsos negativos | 383 | 3.261 |</p>
+<p>O aumento de falsos negativos demonstra o risco de manter um modelo
+sem monitoramento adequado quando o comportamento da variável alvo
+muda.</p>
+<p><strong>Relatório gerado:</strong> *
+`reports/observability/concept_drift_report.html`</p>
+<p><strong>Resultado da avaliação:</strong> *
+`reports/observability/concept_drift_evaluation.json`</p>
+<h2 id="observabilidade-operacional">11. Observabilidade
+operacional**</h2>
+<p>Foi desenvolvido um módulo de observabilidade para consolidar
+indicadores de qualidade, Data Drift, Concept Drift e execução dos
+componentes do projeto.</p>
+<p>O módulo centraliza informações provenientes dos relatórios JSON,
+arquivos CSV e logs gerados durante os experimentos.</p>
+<h3 id="indicadores-monitorados">Indicadores monitorados**</h3>
+<p>| Categoria | Indicador |</p>
+<p>|—|—|</p>
+<p>| Qualidade de dados | Registros válidos |</p>
+<p>| Qualidade de dados | Registros rejeitados |</p>
+<p>| Qualidade de dados | Volume de dados de referência |</p>
+<p>| Data Drift | Quantidade de variáveis com drift |</p>
+<p>| Data Drift | Proporção de variáveis com drift |</p>
+<p>| Concept Drift | Variação do Recall |</p>
+<p>| Concept Drift | Variação do ROC-AUC |</p>
+<p>| Execução | Tempo de coleta das métricas |</p>
+<p>| Integridade | Disponibilidade dos artefatos esperados |</p>
+<h3 id="regras-de-alerta">Regras de alerta**</h3>
+<p>Foram implementadas regras experimentais para demonstrar a
+identificação de situações críticas:</p>
+<p>| Condição | Severidade | Interpretação |</p>
+<p>|—|—|—|</p>
+<p>| Proporção de variáveis com drift igual ou superior a 20% | WARNING
+| Alteração relevante na distribuição dos dados |</p>
+<p>| Queda do Recall igual ou superior a 10 p.p. | CRITICAL | Possível
+degradação relevante do modelo |</p>
+<p>| Ausência de artefatos esperados | WARNING | Problema de integridade
+ou execução |</p>
+<h3 id="resultado-operacional-consolidado">Resultado operacional
+consolidado**</h3>
+<ul>
+<li><p>Dataset de referência: 149.377 registros.</p></li>
+<li><p>Dataset de produção simulado: 30.000 registros.</p></li>
+<li><p>Registros rejeitados: 623.</p></li>
+<li><p>Variáveis com Data Drift: 2 de 10.</p></li>
+<li><p>Recall baseline: 74,13%.</p></li>
+<li><p>Recall após Concept Drift: 39,21%.</p></li>
+<li><p>ROC-AUC baseline: 86,60%.</p></li>
+<li><p>ROC-AUC após Concept Drift: 59,95%.</p></li>
+<li><p>Alertas gerados: 2.</p></li>
+</ul>
+<h3 id="artefatos-gerados">Artefatos gerados**</h3>
+<p>| Arquivo | Finalidade |</p>
+<p>|—|—|</p>
+<p>| `pipeline_metrics.json` | Indicadores consolidados |</p>
+<p>| `operational_report.html` | Relatório operacional |</p>
+<p>| `pipeline_execution.log` | Histórico de execução |</p>
+<p>Os artefatos são armazenados em `reports/observability/`.</p>
+<p><strong>Observação:</strong> * os alertas apresentados são gerados a
+partir dos resultados dos experimentos e dos artefatos disponíveis. Esta
+entrega não implementa monitoramento online contínuo nem integração com
+uma plataforma externa de alertas.</p>
+<h2 id="estrutura-do-projeto">12. Estrutura do projeto**</h2>
+<p>```text</p>
+<p>tech-challenge-observabilidade/</p>
+<p>│</p>
+<p>├── data/</p>
+<p>│ ├── reference/</p>
+<p>│ ├── production/</p>
+<p>│ └── invalid/</p>
+<p>│</p>
+<p>├── models/</p>
+<p>│</p>
+<p>├── reports/</p>
+<p>│ ├── data_quality/</p>
+<p>│ ├── data_drift/</p>
+<p>│ └── observability/</p>
+<p>│</p>
+<p>├── src/</p>
+<p>│ ├── data/</p>
+<p>│ │ ├── load_data.py</p>
+<p>│ │ ├── simulate_drift.py</p>
+<p>│ │ └── simulate_concept_drift.py</p>
+<p>│ │</p>
+<p>│ ├── validation/</p>
+<p>│ │ └── data_contract.py</p>
+<p>│ │</p>
+<p>│ ├── training/</p>
+<p>│ │ └── train_model.py</p>
+<p>│ │</p>
+<p>│ ├── monitoring/</p>
+<p>│ │ ├── detect_drift.py</p>
+<p>│ │ ├── evaluate_concept_drift.py</p>
+<p>│ │ └── generate_concept_drift_report.py</p>
+<p>│ │</p>
+<p>│ └── observability/</p>
+<p>│ └── pipeline_metrics.py</p>
+<p>│</p>
+<p>├── tests/</p>
+<p>│ └── test_data_contract.py</p>
+<p>│</p>
+<p>├── README.md</p>
+<p>├── requirements.txt</p>
+<p>└── .gitignore</p>
+<p>```</p>
+<h2 id="como-executar-o-projeto">13. Como executar o projeto**</h2>
+<h3 id="pré-requisitos">13.1. Pré-requisitos**</h3>
+<ul>
+<li><p>Python 3.11.</p></li>
+<li><p>Git.</p></li>
+<li><p>Windows, Linux ou macOS.</p></li>
+<li><p>Ambiente virtual Python.</p></li>
+</ul>
+<h3 id="clonar-o-repositório">13.2. Clonar o repositório**</h3>
+<p>```bash</p>
+<p>git clone
+https://github.com/Gabrieln91Costa/tech-challenge-observabilidade.git</p>
+<p>cd tech-challenge-observabilidade</p>
+<p>```</p>
+<h3 id="criar-e-ativar-o-ambiente-virtual">13.3. Criar e ativar o
+ambiente virtual**</h3>
+<p>No Windows PowerShell:</p>
+<p>```powershell</p>
+<p>uv venv –python 3.11 .venv</p>
+<p>..venv.ps1</p>
+<p>```</p>
+<h3 id="instalar-dependências">13.4. Instalar dependências**</h3>
+<p>```powershell</p>
+<p>uv pip install –python ..venv.exe -r requirements.txt</p>
+<p>```</p>
+<h3 id="executar-o-pipeline">13.5. Executar o pipeline**</h3>
+<p>Execute os scripts na sequência abaixo, respeitando a geração dos
+artefatos utilizados pelas etapas seguintes:</p>
+<p>```powershell</p>
+<p>python -m src.data.load_data</p>
+<p>python -m src.training.train_model</p>
+<p>python -m src.data.simulate_drift</p>
+<p>python -m src.monitoring.detect_drift</p>
+<p>python -m src.data.simulate_concept_drift</p>
+<p>python -m src.monitoring.evaluate_concept_drift</p>
+<p>python -m src.monitoring.generate_concept_drift_report</p>
+<p>python -m src.observability.pipeline_metrics</p>
+<p>```</p>
+<p>Os comandos devem ser executados a partir da raiz do repositório.</p>
+<h3 id="executar-os-testes">13.6. Executar os testes**</h3>
+<p>```powershell</p>
+<p>python -m pytest -v</p>
+<p>```</p>
+<p>Para verificar a compilação dos módulos:</p>
+<p>```powershell</p>
+<p>python -m compileall -q src tests</p>
+<p>```</p>
+<h3 id="visualizar-os-relatórios">13.7. Visualizar os relatórios**</h3>
+<p>Após a execução, os relatórios HTML estarão disponíveis nos
+diretórios:</p>
+<p>```text</p>
+<p>reports/data_drift/data_drift_report.html</p>
+<p>reports/observability/concept_drift_report.html</p>
+<p>reports/observability/operational_report.html</p>
+<p>```</p>
+<p>O MLflow também pode ser iniciado localmente, quando necessário:</p>
+<p>```powershell</p>
+<p>mlflow ui</p>
+<p>```</p>
+<p>A interface padrão estará disponível em `http://localhost:5000`.</p>
+<h2 id="governança-de-dados-privacidade-e-lgpd">14. Governança de Dados,
+Privacidade e LGPD**</h2>
+<h3 id="objetivo-da-governança">14.1. Objetivo da governança**</h3>
+<p>A governança de dados tem como objetivo estabelecer diretrizes para o
+uso responsável, seguro e rastreável das informações utilizadas no
+modelo de Credit Scoring.</p>
+<p>Em uma aplicação financeira real, o tratamento de dados deve observar
+a Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018),
+considerando princípios como:</p>
+<ul>
+<li><p>Finalidade.</p></li>
+<li><p>Adequação.</p></li>
+<li><p>Necessidade.</p></li>
+<li><p>Livre acesso.</p></li>
+<li><p>Qualidade dos dados.</p></li>
+<li><p>Transparência.</p></li>
+<li><p>Segurança.</p></li>
+<li><p>Prevenção.</p></li>
+<li><p>Não discriminação.</p></li>
+<li><p>Responsabilização e prestação de contas.</p></li>
+</ul>
+<p>A governança deve acompanhar todo o ciclo de vida dos dados, desde a
+coleta até o descarte.</p>
+<h3 id="classificação-e-tratamento-dos-dados">14.2. Classificação e
+tratamento dos dados**</h3>
+<p>O projeto utiliza o dataset público Give Me Some Credit, composto por
+informações relacionadas ao histórico e comportamento financeiro.</p>
+<p>Entre os atributos utilizados estão:</p>
+<ul>
+<li><p>Idade.</p></li>
+<li><p>Renda mensal.</p></li>
+<li><p>Relação entre dívidas e renda.</p></li>
+<li><p>Utilização de crédito rotativo.</p></li>
+<li><p>Quantidade de linhas de crédito.</p></li>
+<li><p>Histórico de atrasos.</p></li>
+<li><p>Quantidade de dependentes.</p></li>
+</ul>
+<p>Essas informações podem ser consideradas dados pessoais quando
+relacionadas a uma pessoa identificada ou identificável.</p>
+<p>A ausência de campos como nome, CPF, telefone e endereço no conjunto
+de atributos do modelo não significa, por si só, que os dados estejam
+anonimizados.</p>
+<p>Também é importante observar que informações financeiras e idade não
+são automaticamente classificadas como dados pessoais sensíveis pela
+definição do artigo 5º, inciso II, da LGPD. Sua utilização, contudo,
+continua exigindo cuidados de privacidade e segurança.</p>
+<h3 id="finalidade-e-bases-legais">14.3. Finalidade e bases
+legais**</h3>
+<p>Em um cenário real de fintech, o tratamento de dados para análise de
+risco de crédito deve possuir finalidade legítima, específica e
+documentada.</p>
+<p>Entre as hipóteses legais que podem ser relevantes, conforme o
+contexto concreto do tratamento, estão:</p>
+<p>| Base legal | Referência | Aplicação possível |</p>
+<p>|—|—|—|</p>
+<p>| Proteção do crédito | Art. 7º, X | Tratamento necessário para
+atividades de proteção do crédito |</p>
+<p>| Procedimentos preliminares relacionados a contrato | Art. 7º, V |
+Análise realizada a pedido do titular para contratação de produto ou
+serviço |</p>
+<p>| Cumprimento de obrigação legal ou regulatória | Art. 7º, II |
+Tratamentos necessários para atender obrigações aplicáveis à instituição
+|</p>
+<p>A escolha da base legal deve ser avaliada pelo controlador de dados,
+considerando a finalidade, a necessidade e as características
+específicas de cada operação.</p>
+<p><strong>Distinção importante sobre este projeto:</strong> * a
+implementação acadêmica utiliza um dataset público para fins de estudo e
+demonstração técnica. Isso não equivale a uma operação real de concessão
+de crédito e não representa uma definição jurídica definitiva de base
+legal para uma fintech.</p>
+<h3 id="privacidade-desde-a-concepção-privacy-by-design">14.4.
+Privacidade desde a concepção (Privacy by Design)**</h3>
+<p>A solução considera princípios de Privacy by Design e Privacy by
+Default como diretrizes para uma futura aplicação produtiva.</p>
+<p>As seguintes medidas são recomendadas:</p>
+<p>| Medida | Objetivo | Situação no projeto |</p>
+<p>|—|—|—|</p>
+<p>| Minimização de dados | Utilizar apenas atributos necessários ao
+modelo | Aplicada na seleção das variáveis utilizadas |</p>
+<p>| Separação dos dados | Diferenciar referência, produção simulada e
+rejeições | Implementada por diretórios |</p>
+<p>| Rastreabilidade | Preservar evidências de validação e execução |
+Implementada por relatórios e logs |</p>
+<p>| Controle de acesso | Restringir dados conforme a função do usuário
+| Não implementado |</p>
+<p>| Criptografia | Proteger dados em trânsito e em repouso | Não
+implementada |</p>
+<p>| Anonimização ou pseudonimização | Reduzir a possibilidade de
+identificação dos titulares | Não implementada como processo formal
+|</p>
+<p>| Política de retenção | Definir prazos e critérios de descarte |
+Documentada como recomendação, sem automação |</p>
+<p>| Auditoria de acesso | Registrar consultas e operações sobre dados
+pessoais | Não implementada |</p>
+<p>Essas medidas devem ser aprofundadas antes de qualquer utilização com
+dados reais de clientes.</p>
+<h3 id="segurança-e-controle-de-acesso">14.5. Segurança e controle de
+acesso**</h3>
+<p>Em uma arquitetura produtiva, o acesso aos dados e aos artefatos do
+modelo deve seguir o princípio do menor privilégio.</p>
+<p>Uma proposta de segregação de responsabilidades seria:</p>
+<p>| Perfil | Responsabilidade |</p>
+<p>|—|—|</p>
+<p>| Engenheiro de Dados | Ingestão, preparação e qualidade dos dados
+|</p>
+<p>| Cientista de Dados | Treinamento, avaliação e experimentação |</p>
+<p>| MLOps | Implantação, monitoramento e versionamento |</p>
+<p>| Governança e Compliance | Auditoria, políticas e conformidade |</p>
+<p>| Administrador | Gestão de permissões e infraestrutura |</p>
+<p>Controles recomendados:</p>
+<ul>
+<li><p>Autenticação individual.</p></li>
+<li><p>Controle de acesso baseado em função (RBAC).</p></li>
+<li><p>Criptografia de dados em trânsito e em repouso.</p></li>
+<li><p>Proteção de credenciais e segredos.</p></li>
+<li><p>Registro de acessos e operações relevantes.</p></li>
+<li><p>Separação entre ambientes de desenvolvimento, teste e
+produção.</p></li>
+</ul>
+<p>Esses controles são recomendações para evolução da arquitetura e não
+funcionalidades integralmente implementadas neste protótipo.</p>
+<h3 id="retenção-e-descarte-dos-dados">14.6. Retenção e descarte dos
+dados**</h3>
+<p>A retenção deve considerar a finalidade do tratamento, as obrigações
+legais e regulatórias aplicáveis e a necessidade de manutenção dos
+registros.</p>
+<p>De acordo com os artigos 15 e 16 da LGPD, o término do tratamento
+pode ocorrer nas hipóteses previstas em lei, e a conservação posterior
+dos dados depende das condições legais aplicáveis.</p>
+<p>Não existe neste projeto um prazo universal de retenção definido para
+dados financeiros. Em uma operação real, o período deverá ser
+formalizado pelo controlador, considerando as obrigações aplicáveis.</p>
+<p>| Tipo de informação | Diretriz recomendada |</p>
+<p>|—|—|</p>
+<p>| Dados de entrada | Manter apenas durante o período necessário à
+finalidade e às obrigações aplicáveis |</p>
+<p>| Dados rejeitados | Definir prazo para investigação, auditoria e
+descarte |</p>
+<p>| Logs de execução | Preservar pelo período necessário à
+rastreabilidade e segurança |</p>
+<p>| Métricas e relatórios | Manter conforme necessidade de auditoria e
+acompanhamento |</p>
+<p>| Modelos e versões | Preservar histórico necessário à
+rastreabilidade das decisões |</p>
+<p>No protótipo, os arquivos são mantidos localmente para permitir a
+reprodução dos experimentos. Não foi implementada uma rotina automática
+de expiração ou descarte.</p>
+<h3 id="direitos-dos-titulares-e-decisões-automatizadas">14.7. Direitos
+dos titulares e decisões automatizadas**</h3>
+<p>A LGPD estabelece direitos dos titulares, incluindo confirmação da
+existência de tratamento, acesso, correção e demais direitos previstos
+no artigo 18.</p>
+<p>Para aplicações de Credit Scoring, também merece atenção o artigo 20,
+que trata do direito de solicitar a revisão de decisões tomadas
+unicamente com base em tratamento automatizado de dados pessoais que
+afetem os interesses do titular, incluindo decisões destinadas a definir
+seu perfil de crédito.</p>
+<p>A instituição responsável deve estar preparada para:</p>
+<ul>
+<li><p>Disponibilizar informações claras sobre o tratamento.</p></li>
+<li><p>Explicar os critérios e procedimentos utilizados na decisão
+automatizada, observados os limites legais.</p></li>
+<li><p>Receber e tratar solicitações de revisão.</p></li>
+<li><p>Preservar informações necessárias à rastreabilidade da
+decisão.</p></li>
+<li><p>Investigar possíveis erros, inconsistências e resultados
+discriminatórios.</p></li>
+</ul>
+<p>O protótipo não implementa um portal de atendimento ao titular nem um
+fluxo de revisão de decisões. Esses recursos são requisitos recomendados
+para uma solução produtiva.</p>
+<h3 id="prevenção-de-vieses-e-discriminação">14.8. Prevenção de vieses e
+discriminação**</h3>
+<p>Modelos de Credit Scoring podem reproduzir distorções presentes nos
+dados históricos.</p>
+<p>Por esse motivo, a avaliação do modelo não deve considerar somente
+métricas gerais de desempenho.</p>
+<p>Recomenda-se avaliar:</p>
+<ul>
+<li><p>Distribuição das previsões.</p></li>
+<li><p>Taxas de falsos positivos e falsos negativos.</p></li>
+<li><p>Desempenho por grupos relevantes, quando houver base legal e
+metodologia apropriada.</p></li>
+<li><p>Estabilidade das métricas ao longo do tempo.</p></li>
+<li><p>Possíveis impactos discriminatórios.</p></li>
+<li><p>Justificativa e rastreabilidade dos critérios
+utilizados.</p></li>
+</ul>
+<p>Neste projeto foram avaliadas métricas como Precision, Recall,
+F1-score e ROC-AUC, além das matrizes de confusão.</p>
+<p><strong>Limitação:</strong> * não foi implementada uma avaliação
+formal de fairness por grupos demográficos ou uma auditoria de
+discriminação. Essa análise deve fazer parte da evolução do projeto
+antes de uma aplicação real em decisões de crédito.</p>
+<h3 id="rastreabilidade-e-auditoria-do-modelo">14.9. Rastreabilidade e
+auditoria do modelo**</h3>
+<p>A rastreabilidade é essencial para entender como os dados foram
+processados e como o modelo chegou aos resultados observados.</p>
+<p>O projeto utiliza:</p>
+<p>| Recurso | Evidência |</p>
+<p>|—|—|</p>
+<p>| MLflow | Registro de parâmetros, métricas e artefato do modelo
+|</p>
+<p>| Pandera | Validação do contrato de dados |</p>
+<p>| Arquivos JSON | Armazenamento de métricas e resultados |</p>
+<p>| Relatórios HTML | Evidências de Data Drift e Concept Drift |</p>
+<p>| Python Logging | Histórico das execuções operacionais |</p>
+<p>| Estrutura de diretórios | Separação entre referência, produção e
+dados inválidos |</p>
+<p>Esses recursos permitem reconstruir os experimentos realizados e
+identificar alterações relevantes durante a execução do pipeline.</p>
+<h3 id="avaliação-de-impacto-à-proteção-de-dados">14.10. Avaliação de
+impacto à proteção de dados**</h3>
+<p>Em uma aplicação real de Credit Scoring, recomenda-se avaliar a
+necessidade de elaborar um Relatório de Impacto à Proteção de Dados
+Pessoais (RIPD), especialmente considerando a natureza das informações
+utilizadas e os possíveis impactos de decisões automatizadas sobre os
+titulares.</p>
+<p>Essa avaliação deve considerar:</p>
+<ul>
+<li><p>Finalidade e necessidade do tratamento.</p></li>
+<li><p>Categorias de dados pessoais utilizadas.</p></li>
+<li><p>Riscos aos direitos e liberdades dos titulares.</p></li>
+<li><p>Medidas de segurança e mitigação.</p></li>
+<li><p>Compartilhamento de dados com terceiros.</p></li>
+<li><p>Critérios de retenção e descarte.</p></li>
+<li><p>Mecanismos de transparência e atendimento aos titulares.</p></li>
+</ul>
+<p>A elaboração e a necessidade do RIPD devem ser avaliadas conforme o
+contexto e as orientações da autoridade competente. Este projeto
+acadêmico não constitui um RIPD formal.</p>
+<h3 id="referências-legais-e-institucionais">14.11. Referências legais e
+institucionais**</h3>
+<ul>
+<li><p><strong>Lei Geral de Proteção de Dados — Lei nº
+13.709/2018:</strong> *</p>
+<p>https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2018/lei/l13709.htm</p></li>
+<li><p><strong>ANPD — Direitos dos titulares de dados pessoais:</strong>
+*</p>
+<p>https://www.gov.br/anpd/pt-br/assuntos/titular-de-dados/direito-dos-titulares</p></li>
+<li><p><strong>Governo Digital — Solicitar revisão de decisões tomadas
+com base em tratamento automatizado:</strong> *</p>
+<p>https://www.gov.br/governodigital/pt-br/lgpd-pagina-do-cidadao/solicitar-a-revisao-de-decisoes-tomadas-com-base-em-tratamento-automatizado-de-dados-pessoais</p></li>
+</ul>
+<h2 id="limitações-e-considerações-técnicas">15. Limitações e
+considerações técnicas**</h2>
+<p>Esta entrega possui caráter experimental e acadêmico. Os resultados
+demonstram mecanismos de validação, monitoramento e observabilidade, mas
+não representam uma solução de produção integrada a uma instituição
+financeira.</p>
+<p>Principais limitações:</p>
+<ol type="1">
+<li><p><strong>Dados simulados:</strong> * as alterações de Data Drift e
+Concept Drift foram provocadas artificialmente para demonstrar os
+mecanismos de detecção.</p></li>
+<li><p><strong>Concept Drift controlado:</strong> * os rótulos foram
+alterados de forma experimental, sem evidência de mudança real no
+comportamento de clientes.</p></li>
+<li><p><strong>Monitoramento não contínuo:</strong> * a execução ocorre
+por scripts e artefatos locais, sem ingestão em tempo real.</p></li>
+<li><p><strong>Alertas experimentais:</strong> * as regras são avaliadas
+sobre os resultados gerados, sem integração com ferramentas externas de
+notificação.</p></li>
+<li><p><strong>Fairness:</strong> * não foi implementada uma avaliação
+formal de equidade entre grupos.</p></li>
+<li><p><strong>Causalidade:</strong> * não foi implementada análise
+causal para explicar as causas das alterações observadas.</p></li>
+<li><p><strong>Governança:</strong> * controles como RBAC, criptografia,
+anonimização formal, auditoria de acesso e descarte automatizado foram
+documentados como recomendações, mas não implementados.</p></li>
+<li><p><strong>Validação temporal:</strong> * os experimentos não
+substituem uma validação independente com dados reais e períodos
+distintos.</p></li>
+<li><p><strong>Treinamento:</strong> * o tratamento de valores ausentes
+antes da divisão entre treino e teste pode introduzir vazamento de
+informação. Uma evolução recomendada é realizar a imputação dentro do
+pipeline de treinamento, ajustando-a exclusivamente com os dados de
+treino.</p></li>
+</ol>
+<p>Os parâmetros e limites utilizados nas simulações devem ser
+recalibrados com dados históricos, conhecimento do negócio e validação
+estatística antes de qualquer utilização produtiva.</p>
+<h2 id="conclusão">16. Conclusão**</h2>
+<p>O projeto demonstra como práticas de Engenharia de Dados, Machine
+Learning e MLOps podem ser combinadas para aumentar a confiabilidade e a
+rastreabilidade de modelos de Credit Scoring.</p>
+<p>A implementação contempla validação de contratos de dados, tratamento
+de registros inválidos, treinamento de um modelo baseline, registro de
+experimentos, detecção estatística de Data Drift, simulação de Concept
+Drift e consolidação de indicadores operacionais.</p>
+<p>Os experimentos evidenciaram que alterações nas distribuições dos
+dados e na relação entre atributos e variável alvo podem comprometer o
+desempenho do modelo, especialmente na identificação de clientes
+inadimplentes.</p>
+<p>A inclusão de diretrizes de governança e LGPD reforça a importância
+de considerar privacidade, transparência, segurança e prevenção de
+discriminação durante todo o ciclo de vida de soluções de inteligência
+artificial aplicadas ao crédito.</p>
+<p>Dessa forma, a observabilidade deixa de ser apenas uma atividade
+técnica de monitoramento e passa a ser um componente essencial para a
+gestão de riscos, a governança e a evolução responsável de modelos de
+Machine Learning.</p>
+<footer>Projeto acadêmico experimental · Resultados obtidos em simulações controladas · Não representa monitoramento online de uma instituição financeira.</footer>
+</div>
+</body>
+</html>
